@@ -1,0 +1,7 @@
+GET http://localhost:8080/day/2020-07-14
+
+###
+POST http://localhost:8080/day
+Content-Type: application/json
+
+{"description":  "this is a task description", "duration":  120, "date": "2020-07-14T08:35:12"}
