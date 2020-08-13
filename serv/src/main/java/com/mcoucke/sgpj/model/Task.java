@@ -1,12 +1,21 @@
 package com.mcoucke.sgpj.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name="task")
 public class Task {
-    public String description;
-    public int duration;
-    public LocalDateTime date;
-    public LocalDateTime creationDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String description;
+    private int duration;
+    private LocalDateTime date;
+    private LocalDateTime creationDate;
+
+    public Task() {}
 
     public Task(String description, int duration, LocalDateTime date, LocalDateTime creationDate) {
         this.description = description;
@@ -42,5 +51,21 @@ public class Task {
 
     public LocalDateTime getCreationDate() {
         return creationDate;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 }
