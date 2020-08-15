@@ -14,4 +14,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
 
     @Query(value = "SELECT * FROM task WHERE DATE(date) = :date", nativeQuery = true)
     List<Task> findTasksByDate(@Param("date") LocalDateTime date);
+
+    @Query(value = "SELECT * FROM task WHERE WEEK(date, 1) = WEEK(:date, 1)", nativeQuery = true)
+    List<Task> findTasksByWeek(@Param("date") LocalDateTime date);
 }

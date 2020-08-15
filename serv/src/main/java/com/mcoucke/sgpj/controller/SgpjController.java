@@ -40,4 +40,15 @@ public class SgpjController {
             return ResponseEntity.ok().body(task);
         }
     }
+
+    @GetMapping("/week/{date}")
+    public ResponseEntity<List<Task>> getWeekSchedule(@PathVariable String date) {
+        try {
+            LocalDate localDate = LocalDate.parse(date);
+            List<Task> tasks = taskRepository.findTasksByWeek(LocalDateTime.of(localDate, LocalTime.MIDNIGHT));
+            return ResponseEntity.ok().body(tasks);
+        } catch (DateTimeParseException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
