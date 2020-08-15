@@ -1,8 +1,8 @@
 GP :
 - un projet possède des sprints (dates fixes)
-- un sprint possède des tâches ayant un statut
-- les tâches peuvent être échangées entre plusieurs sprints
-- une tâche peut être assignée à 1/plusieurs personnes (voir gestion compte + tard)
+- un sprint possède des items ayant un statut
+- les items peuvent être échangées entre plusieurs sprints
+- un item peut être assigné à 1/plusieurs personnes (voir gestion compte + tard)
 
 
 GJ :
@@ -10,3 +10,7 @@ GJ :
 - une tâche a un créneau horaire unique
 - possibilité de créer une liste de tâches prédéfinies
 - possibilité de choisir une tache de GP à assigner à sa journée
+
+
+GP/GJ :
+- ajouter une importance aux tâches/items avec gestion de notifs etc...
