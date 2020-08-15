@@ -1,8 +1,0 @@
-# s'attacher à un container
-docker exec -it mysql bash -l
-
-# copier un fichier dans un container
-docker cp CHEMIN_SRC nom_conteneur:/CHEMIN_DEST
-
-# création conteneur mysql
-docker run -d --name mysql --env="MYSQL_ROOT_PASSWORD=root" mysql
