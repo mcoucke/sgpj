@@ -1,0 +1,15 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: 6vh;
+    width: 60%;
+    margin: auto;
+    border: thin solid;
+}
+
+.day-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25em;
+    padding: 1em;
+}
