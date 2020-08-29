@@ -26,9 +26,9 @@ public class Task {
 
     private LocalDateTime roundDateTime(LocalDateTime date) {
         int min = date.getMinute();
-        int mode = min % 15;
-        if (mode > 15 / 2) {
-            min = 15 - mode;
+        int mode = min % 30;
+        if (mode > 15) {
+            min = 30 - mode;
         } else {
             min = -mode;
         }
