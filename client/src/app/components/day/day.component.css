@@ -1,8 +1,9 @@
 .wrapper {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-auto-rows: 6vh;
     width: 60%;
+    display: grid;
+    grid-template-columns: 0.5fr repeat(6, 1fr);
+    grid-template-rows: repeat(24, 3vh);
+    grid-auto-flow: column;
     margin: auto;
     border: thin solid;
 }
@@ -12,4 +13,40 @@
     font-weight: bold;
     font-size: 1.25em;
     padding: 1em;
+}
+
+.time-col {
+    grid-row: span 2;
+    align-self: center;
+    text-align: center;
+}
+
+.complete-col {
+    grid-column: 2 / 8;
+    background-color: rgb(99, 151, 98);
+}
+
+.left-half-col {
+    grid-column: 2 / 5;
+    background-color: rgb(98, 155, 155);
+}
+
+.right-half-col {
+    grid-column: 5 / 8;
+    background-color: rgb(179, 160, 54);
+}
+
+.left-third-col {
+    grid-column: 2 / 4;
+    background-color: rgb(142, 95, 185);
+}
+
+.mid-third-col {
+    grid-column: 4 / 6;
+    background-color: rgb(139, 72, 72);
+}
+
+.right-third-col {
+    grid-column: 6 / 8;
+    background-color: rgb(83, 172, 75);
 }

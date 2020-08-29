@@ -1,5 +1,10 @@
 
 <div class="day-title">Vendredi 21 août 2020</div>
 <div class="wrapper">
-    
+    <div class="time-col" *ngFor="let s of slots">{{s}}</div>
+    <ng-container *ngFor="let t of tasks">
+        <div [ngClass]=" t.colCssClass" [ngStyle]="{'grid-row': t.gridRowValue }">
+            {{t.id}}
+        </div>
+    </ng-container>
 </div>

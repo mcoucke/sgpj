@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task/task.service';
 
+import { Task } from 'src/app/models/task.model';
+
 @Component({
   selector: 'app-day',
   templateUrl: './day.component.html',
@@ -9,20 +11,95 @@ import { TaskService } from 'src/app/services/task/task.service';
 export class DayComponent implements OnInit {
 
   slots : string[] = [
-    '07:00', '07:30', '08:00', '08:30',
-    '09:00', '09:30', '10:00', '10:30',
-    '11:00', '11:30', '12:00', '12:30',
-    '13:00', '13:30', '14:00', '14:30',
-    '15:00', '15:30', '16:00', '16:30',
-    '17:00', '17:30', '18:00' ];
+    '07:00', '08:00', '09:00', '10:00',
+    '11:00', '12:00', '13:00', '14:00',
+    '15:00', '16:00', '17:00', '18:00' ];
+
+  css_tasks_classes : string[][] = [
+    ['complete-col'],
+    ['left-half-col', 'right-half-col'],
+    ['left-third-col', 'mid-third-col', 'right-third-col']
+  ];
+
+  tasks : Task[] = [];
+
+  // { "08:30:00" : [taskA, taskB], "08:30:00" : ...}
+  tasks_slots : Map<string, Task[]>;
 
   constructor(private taskService : TaskService) { }
 
   ngOnInit(): void {
+    this.tasks_slots = new Map<string, Task[]>();
     this.taskService.getDay('2020-07-14')
-      .subscribe(data => {
-        console.log("data : ", data);
-      })
+      .subscribe((data : Object[]) => {
+        data.forEach(t => {
+          this.tasks.push(new Task().deserialize(t));
+        })
+        this.fillTasksSlots();
+        this.setCssClasses();
+      },
+      (error) => {
+        console.error("An error occurred during http request", error)
+      }
+    );
+  }
+
+
+  //Compute span size using task duration
+  getSpanSize(task : Task) {
+    return Math.ceil(task.duration / 30);
+  }
+
+  //Compute task position on grid rows using task date
+  getGridRowPosFromDate(task : Task) {
+    let minutes = task.date.getHours() * 60 + task.date.getMinutes();
+    // Removing 7 hours to know how much rows to skip from first hour
+    let correctTime = minutes - 420;
+    return Math.ceil(correctTime / 30);
+  }
+
+  //Insert tasks in each time slot it belongs to
+  fillTasksSlots() {
+    for (let t of this.tasks) {
+      let startDate = new Date(t.date.getTime());
+      for (let i = 0; i < this.getSpanSize(t); i++) {
+        if (!(startDate.toLocaleTimeString() in this.tasks_slots)) {
+          this.tasks_slots[startDate.toLocaleTimeString()] = [];
+        }
+        this.tasks_slots[startDate.toLocaleTimeString()].push(t);
+        startDate.setMinutes(startDate.getMinutes() + 30);
+      }
+    }
+  }
+
+  //Assign correct css class and row position for each task
+  setCssClasses() {
+    this.tasks.forEach(task => {
+      // Column css position
+      let listTasks = this.getMaxNeighbours(task);
+      // tasks count
+      let nb = listTasks.length;
+      // index of task in list
+      let pos = listTasks.map(function(e) { return e.id; }).indexOf(task.id);
+      task.colCssClass = this.css_tasks_classes[nb-1][pos];
+      // Row css position
+      let startPos = this.getGridRowPosFromDate(task) + 1;
+      let stopPos = this.getSpanSize(task) + startPos;
+      task.gridRowValue = startPos + " / " + stopPos;
+    })
+  }
+ 
+  // Return maximum neighbours count for a given task
+  getMaxNeighbours(task : Task) {
+    let maxNeighs = [task];
+    let startDate = new Date(task.date.getTime());
+    for (let i = 0; i < this.getSpanSize(task); i++) {
+      if (this.tasks_slots[startDate.toLocaleTimeString()].length > maxNeighs.length) {
+        maxNeighs = this.tasks_slots[startDate.toLocaleTimeString()];
+      }
+      startDate.setMinutes(startDate.getMinutes() + 30);
+    }
+    return maxNeighs;
   }
 
 }

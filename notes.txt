@@ -7,10 +7,15 @@ GP :
 
 GJ :
 - une journée possède des tâches
-- une tâche a un créneau horaire unique
+- une tâche a un créneau horaire
 - possibilité de créer une liste de tâches prédéfinies
-- possibilité de choisir une tache de GP à assigner à sa journée
-
+- possibilité de choisir une tache de GP à assigner à sa journée (si connecté?)
+- pas plus de 3 tâches dans une même tranche horaire (opti affichage)
+- trier les tâches par heure de début + durée (+tôt & +long d'abord)
+- ajouter un delete de tâche
+- round 30min
+- ajouter une fonctionnalité "répétition de la tâche"
+- ajouter un getter d'id dans la classe Task de serv
 
 GP/GJ :
 - ajouter une importance aux tâches/items avec gestion de notifs etc...
