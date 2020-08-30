@@ -12,9 +12,5 @@ GJ :
 - possibilité de choisir une tache de GP à assigner à sa journée (si connecté?)
 - ajouter une fonctionnalité "répétition de la tâche"
 
-A faire avant de repasser sur la branche client :
-- trier les tâches par heure de début + durée (+tôt & +long d'abord)
-- ajouter un delete de tâche
-
 GP/GJ :
 - ajouter une importance aux tâches/items avec gestion de notifs etc...

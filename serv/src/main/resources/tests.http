@@ -4,7 +4,7 @@ GET http://localhost:8080/day/2020-07-14
 POST http://localhost:8080/day
 Content-Type: application/json
 
-{"description":  "this task will be deleted omegalul", "duration":  60, "date": "2020-07-15T09:35:24"}
+{"description":  "a new task is added", "duration":  60, "date": "2020-07-14T07:12:24"}
 
 ###
 GET http://localhost:8080/week/2020-07-14
