@@ -5,6 +5,7 @@ import com.mcoucke.sgpj.model.Task;
 import com.mcoucke.sgpj.repository.TaskRepository;
 import com.mcoucke.sgpj.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +48,20 @@ public class SgpjController {
             Task task = new Task(taskDTO.getDescription(), taskDTO.getDuration(), taskDTO.getDate(), LocalDateTime.now());
             taskRepository.save(task);
             return ResponseEntity.ok().body(task);
+        }
+    }
+
+    @DeleteMapping("/day/{id}")
+    public ResponseEntity<String> deleteTask(@PathVariable String id) {
+        try {
+            Task t = taskRepository.findById(Long.parseLong(id)).orElse(null);
+            if (t == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            taskRepository.deleteById(Long.parseLong(id));
+            return ResponseEntity.ok().build();
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 
