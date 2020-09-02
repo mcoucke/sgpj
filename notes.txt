@@ -6,11 +6,10 @@ GP :
 
 
 GJ :
-- une journée possède des tâches
-- une tâche a un créneau horaire
 - possibilité de créer une liste de tâches prédéfinies
 - possibilité de choisir une tache de GP à assigner à sa journée (si connecté?)
 - ajouter une fonctionnalité "répétition de la tâche"
+- voir pour optimiser le taskService
 
 GP/GJ :
 - ajouter une importance aux tâches/items avec gestion de notifs etc...
