@@ -23,6 +23,8 @@ export class DayComponent implements OnInit {
 
   tasks : Task[] = [];
 
+  current_day : string = '2020-07-14';
+
   // { "08:30:00" : [taskA, taskB], "08:30:00" : ...}
   tasks_slots : Map<string, Task[]>;
 
@@ -30,20 +32,16 @@ export class DayComponent implements OnInit {
 
   ngOnInit(): void {
     this.tasks_slots = new Map<string, Task[]>();
-    this.taskService.getDay('2020-07-14')
+    this.taskService.getDay(this.current_day)
       .subscribe((data : Object[]) => {
         data.forEach(t => {
           this.tasks.push(new Task().deserialize(t));
         })
         this.fillTasksSlots();
         this.setCssClasses();
-      },
-      (error) => {
-        console.error("An error occurred during http request", error)
       }
     );
   }
-
 
   //Compute span size using task duration
   getSpanSize(task : Task) {
@@ -100,6 +98,10 @@ export class DayComponent implements OnInit {
       startDate.setMinutes(startDate.getMinutes() + 30);
     }
     return maxNeighs;
+  }
+
+  openAddTaskDialog() {
+    //todo
   }
 
 }

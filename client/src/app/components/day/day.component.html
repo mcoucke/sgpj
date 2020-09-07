@@ -1,10 +1,17 @@
-
-<div class="day-title">Vendredi 21 août 2020</div>
+<div class="title-container">
+    <span class="material-icons arrows">navigate_before</span>
+    <div class="day-title">Vendredi 21 août 2020</div>
+    <span class="material-icons arrows">navigate_next</span>
+</div>
 <div class="wrapper">
     <div class="time-col" *ngFor="let s of slots">{{s}}</div>
     <ng-container *ngFor="let t of tasks">
-        <div [ngClass]=" t.colCssClass" [ngStyle]="{'grid-row': t.gridRowValue }">
-            {{t.id}}
+        <div [ngClass]=" t.colCssClass" class="task" [ngStyle]="{'grid-row': t.gridRowValue }">
+            {{t.description}}
         </div>
+        <!-- modal for each task -->
     </ng-container>
 </div>
+
+<span (click)="openAddTaskDialog()" class="material-icons add_icon">add_circle</span>
+<!-- modal for adding task -->

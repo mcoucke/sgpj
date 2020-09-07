@@ -10,6 +10,7 @@ GJ :
 - possibilité de choisir une tache de GP à assigner à sa journée (si connecté?)
 - ajouter une fonctionnalité "répétition de la tâche"
 - voir pour optimiser le taskService
+- voir pour optimiser la largeur des tâches dans l'affichage
 
 GP/GJ :
 - ajouter une importance aux tâches/items avec gestion de notifs etc...

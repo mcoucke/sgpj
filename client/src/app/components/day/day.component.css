@@ -6,6 +6,25 @@
     grid-auto-flow: column;
     margin: auto;
     border: thin solid;
+    gap: 0.4em;
+}
+
+.title-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.task {
+    color: white;
+    background-color: steelblue;
+    transition: 0.3s;
+}
+
+.task:hover {
+    cursor: pointer;
+    background-color: teal;
+    transition: 0.3s;
 }
 
 .day-title {
@@ -23,30 +42,51 @@
 
 .complete-col {
     grid-column: 2 / 8;
-    background-color: rgb(99, 151, 98);
 }
 
 .left-half-col {
     grid-column: 2 / 5;
-    background-color: rgb(98, 155, 155);
 }
 
 .right-half-col {
     grid-column: 5 / 8;
-    background-color: rgb(179, 160, 54);
 }
 
 .left-third-col {
     grid-column: 2 / 4;
-    background-color: rgb(142, 95, 185);
 }
 
 .mid-third-col {
     grid-column: 4 / 6;
-    background-color: rgb(139, 72, 72);
 }
 
 .right-third-col {
     grid-column: 6 / 8;
-    background-color: rgb(83, 172, 75);
+}
+
+.add_icon {
+    position: absolute;
+    bottom: 3%;
+    right: 3%;
+    cursor: pointer;
+    font-size: 4em;
+    color: orangered;
+    transition: 0.3s;
+}
+
+.add_icon:hover {
+    color: orange;
+    transition: 0.3s;
+}
+
+.arrows {
+    font-size: 2em;
+    cursor: pointer;
+    color: black;
+    transition: 0.3s;
+}
+
+.arrows:hover {
+    color: dimgray;
+    transition: 0.3s;
 }
