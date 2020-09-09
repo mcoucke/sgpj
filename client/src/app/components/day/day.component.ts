@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task/task.service';
 
 import { Task } from 'src/app/models/task.model';
+import { AddDayDialog } from 'src/app/dialogs/day/add/add.day.dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-day',
@@ -28,7 +30,10 @@ export class DayComponent implements OnInit {
   // { "08:30:00" : [taskA, taskB], "08:30:00" : ...}
   tasks_slots : Map<string, Task[]>;
 
-  constructor(private taskService : TaskService) { }
+  constructor(
+    private taskService : TaskService,
+    public addDialog : MatDialog
+    ) { }
 
   ngOnInit(): void {
     this.tasks_slots = new Map<string, Task[]>();
@@ -100,8 +105,19 @@ export class DayComponent implements OnInit {
     return maxNeighs;
   }
 
-  openAddTaskDialog() {
-    //todo
+  openAddTaskDialog(): void {
+    const addDialogRef = this.addDialog.open(AddDayDialog, {
+      // width : '250px',
+      data: {}
+    });
+
+    addDialogRef.afterClosed().subscribe(result => {
+      console.log('adddDialog closed');
+    })
+  }
+
+  openEditTaskDialog(task : Task): void {
+    console.log(task);
   }
 
 }
