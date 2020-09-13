@@ -4,6 +4,7 @@ import { TaskService } from 'src/app/services/task/task.service';
 import { Task } from 'src/app/models/task.model';
 import { AddDayDialog } from 'src/app/dialogs/day/add/add.day.dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-day',
@@ -25,18 +26,22 @@ export class DayComponent implements OnInit {
 
   tasks : Task[] = [];
 
-  current_day : string = '2020-07-14';
+  current_day : string;
 
   // { "08:30:00" : [taskA, taskB], "08:30:00" : ...}
   tasks_slots : Map<string, Task[]>;
 
   constructor(
     private taskService : TaskService,
-    public addDialog : MatDialog
+    public addDialog : MatDialog,
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
     this.tasks_slots = new Map<string, Task[]>();
+
+    this.current_day = this.route.snapshot.paramMap.get('date');
+
     this.taskService.getDay(this.current_day)
       .subscribe((data : Object[]) => {
         data.forEach(t => {
@@ -107,12 +112,17 @@ export class DayComponent implements OnInit {
 
   openAddTaskDialog(): void {
     const addDialogRef = this.addDialog.open(AddDayDialog, {
-      // width : '250px',
-      data: {}
+      width: '25%',
+      data: {
+        date: new Date(this.current_day),
+        time: "07:00",
+        duration: 30,
+      }
     });
 
     addDialogRef.afterClosed().subscribe(result => {
       console.log('adddDialog closed');
+      console.log(result);
     })
   }
 

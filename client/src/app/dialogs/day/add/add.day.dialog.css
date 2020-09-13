@@ -1,0 +1,17 @@
+.full-form-item {
+    width: 100%;
+}
+
+.half-form-item {
+    width: 45%;
+}
+
+.half-form-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.duration-form::after {
+    content: 'ms';
+  }
