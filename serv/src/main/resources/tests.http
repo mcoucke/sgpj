@@ -10,4 +10,4 @@ Content-Type: application/json
 GET http://localhost:8080/week/2020-07-14
 
 ###
-DELETE http://localhost:8080/day/10
+DELETE http://localhost:8080/day/11

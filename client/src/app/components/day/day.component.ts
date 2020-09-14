@@ -4,6 +4,7 @@ import { TaskService } from 'src/app/services/task/task.service';
 import { Task } from 'src/app/models/task.model';
 import { AddDayDialog } from 'src/app/dialogs/day/add/add.day.dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -32,17 +33,18 @@ export class DayComponent implements OnInit {
   tasks_slots : Map<string, Task[]>;
 
   constructor(
-    private taskService : TaskService,
-    public addDialog : MatDialog,
-    private route: ActivatedRoute
+    private _taskService : TaskService,
+    private _route: ActivatedRoute,
+    private _snackBar : MatSnackBar,
+    public addDialog : MatDialog
     ) { }
 
   ngOnInit(): void {
     this.tasks_slots = new Map<string, Task[]>();
 
-    this.current_day = this.route.snapshot.paramMap.get('date');
+    this.current_day = this._route.snapshot.paramMap.get('date');
 
-    this.taskService.getDay(this.current_day)
+    this._taskService.getDay(this.current_day)
       .subscribe((data : Object[]) => {
         data.forEach(t => {
           this.tasks.push(new Task().deserialize(t));
@@ -121,13 +123,31 @@ export class DayComponent implements OnInit {
     });
 
     addDialogRef.afterClosed().subscribe(result => {
-      console.log('adddDialog closed');
-      console.log(result);
+      if (result) {
+        let timeTokens = result.time.split(':');
+        let taskDate = new Date(Date.UTC(result.date.getFullYear(), result.date.getMonth(), 
+                        result.date.getDate(), Number(timeTokens[0]), Number(timeTokens[1]), 0));
+        this._taskService.addTask(result.description, result.duration, taskDate)
+          .subscribe((data : any) => {
+            let dateObj = new Date(data.date);
+            this.openSnackBar('Task added to ' + dateObj.toLocaleDateString(), 'OK', 3000);
+          }, (error) => {
+            console.log(error);
+            this.openSnackBar(error, null, 3000);
+          })
+      }
     })
   }
 
   openEditTaskDialog(task : Task): void {
     console.log(task);
+  }
+
+
+  openSnackBar(message: string, action: string, duration: number) {
+    this._snackBar.open(message, action, {
+      duration: duration,
+    });
   }
 
 }

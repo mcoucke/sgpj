@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Task } from 'src/app/models/task.model';
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import { NumberValueAccessor } from '@angular/forms';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -42,8 +43,8 @@ export class TaskService {
       );
   }
 
-  addTask(task : Task): Observable<Task> {
-    return this.http.post<Task>("http://localhost:8080/day/", task, httpOptions)
+  addTask(description : string, duration : number, date : Date): Observable<Task> {
+    return this.http.post<Task>("http://localhost:8080/day/", {description, duration, date}, httpOptions)
       .pipe(
         // retry(3),
         catchError(this.handleError)
