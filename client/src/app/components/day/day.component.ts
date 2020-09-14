@@ -5,7 +5,8 @@ import { Task } from 'src/app/models/task.model';
 import { AddDayDialog } from 'src/app/dialogs/day/add/add.day.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-day',
@@ -25,9 +26,11 @@ export class DayComponent implements OnInit {
     ['left-third-col', 'mid-third-col', 'right-third-col']
   ];
 
-  tasks : Task[] = [];
+  tasks : Task[];
 
-  current_day : string;
+  currentDay : string;
+  previousDay : string;
+  nextDay : string;
 
   // { "08:30:00" : [taskA, taskB], "08:30:00" : ...}
   tasks_slots : Map<string, Task[]>;
@@ -40,19 +43,25 @@ export class DayComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.tasks_slots = new Map<string, Task[]>();
+    this._route.params.subscribe((params : Params) => {
+      this.tasks_slots = new Map<string, Task[]>();
+      this.tasks = [];
 
-    this.current_day = this._route.snapshot.paramMap.get('date');
+      this.currentDay = params['date'];
 
-    this._taskService.getDay(this.current_day)
-      .subscribe((data : Object[]) => {
-        data.forEach(t => {
-          this.tasks.push(new Task().deserialize(t));
-        })
-        this.fillTasksSlots();
-        this.setCssClasses();
-      }
-    );
+      this.initNavigation();
+
+      this._taskService.getDay(this.currentDay)
+        .subscribe((data : Object[]) => {
+          data.forEach(t => {
+            this.tasks.push(new Task().deserialize(t));
+          })
+          this.fillTasksSlots();
+          this.setCssClasses();
+        }
+      );
+    })
+    
   }
 
   //Compute span size using task duration
@@ -116,7 +125,7 @@ export class DayComponent implements OnInit {
     const addDialogRef = this.addDialog.open(AddDayDialog, {
       width: '25%',
       data: {
-        date: new Date(this.current_day),
+        date: new Date(this.currentDay),
         time: "07:00",
         duration: 30,
       }
@@ -148,6 +157,23 @@ export class DayComponent implements OnInit {
     this._snackBar.open(message, action, {
       duration: duration,
     });
+  }
+
+  initNavigation() {
+    let currentDate = new Date(this.currentDay);
+
+    let previousDate = new Date(this.currentDay);
+    previousDate.setDate(currentDate.getDate() - 1);
+    this.previousDay = this.parseToRoute(previousDate);
+
+    let nextDate = new Date(this.currentDay);
+    nextDate.setDate(currentDate.getDate() + 1);
+    this.nextDay = this.parseToRoute(nextDate);
+  }
+
+  parseToRoute(date : Date) {
+    let str = formatDate(date, 'yyyy-MM-dd', 'en-US');
+    return str;
   }
 
 }

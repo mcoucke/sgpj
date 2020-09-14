@@ -1,7 +1,7 @@
 <div class="title-container">
-    <span class="material-icons arrows">navigate_before</span>
+    <span [routerLink]="['/schedule/day', previousDay]" class="material-icons arrows">navigate_before</span>
     <div class="day-title">Vendredi 21 août 2020</div>
-    <span class="material-icons arrows">navigate_next</span>
+    <span [routerLink]="['/schedule/day', nextDay]" class="material-icons arrows">navigate_next</span>
 </div>
 <div class="wrapper">
     <div class="time-col" *ngFor="let s of slots">{{s}}</div>
