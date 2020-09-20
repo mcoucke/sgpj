@@ -1,6 +1,6 @@
 <div class="title-container">
     <span [routerLink]="['/schedule/day', previousDay]" class="material-icons arrows">navigate_before</span>
-    <div class="day-title">Vendredi 21 août 2020</div>
+    <div class="day-title">{{getCurrentDateTitle()}}</div>
     <span [routerLink]="['/schedule/day', nextDay]" class="material-icons arrows">navigate_next</span>
 </div>
 <div class="wrapper">
@@ -9,9 +9,7 @@
         <div (click)="openEditTaskDialog(t)" [ngClass]=" t.colCssClass" class="task" [ngStyle]="{'grid-row': t.gridRowValue }">
             {{t.description}}
         </div>
-        <!-- modal for each task -->
     </ng-container>
 </div>
 
 <span (click)="openAddTaskDialog()" class="material-icons add_icon">add_circle</span>
-<!-- modal for adding task -->

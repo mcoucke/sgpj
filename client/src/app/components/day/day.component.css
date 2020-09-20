@@ -90,3 +90,7 @@
     color: dimgray;
     transition: 0.3s;
 }
+
+.arrows:focus {
+    outline: none;
+}

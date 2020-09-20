@@ -64,6 +64,11 @@ export class DayComponent implements OnInit {
     
   }
 
+  getCurrentDateTitle() {
+    let currDate = new Date(this.currentDay);
+    return formatDate(currDate, 'fullDate', 'en-US');
+  }
+
   //Compute span size using task duration
   getSpanSize(task : Task) {
     return Math.ceil(task.duration / 30);
