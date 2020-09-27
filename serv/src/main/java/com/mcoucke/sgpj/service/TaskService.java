@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TaskService {
 
-    public int getMaxNeighboursCount(List<Task> tasks, LocalDateTime date, int duration) {
+    public static int getMaxNeighboursCount(List<Task> tasks, LocalDateTime date, int duration) {
         int count = 0;
         LocalDateTime endCurrentDate = date.plusMinutes((long) duration);
         for (Task t : tasks) {
@@ -22,7 +22,7 @@ public class TaskService {
         return count;
     }
 
-    public boolean isDurationCorrect(Task task) {
+    public static boolean isDurationCorrect(Task task) {
         if (task.getDuration() <= 0 || task.getDuration() > 660) {
             return false;
         }
@@ -35,7 +35,7 @@ public class TaskService {
 
     }
 
-    public boolean isDateTimeCorrect(Task task) {
+    public static boolean isDateTimeCorrect(Task task) {
         boolean end = task.getDate().getHour() < 17
                 || (task.getDate().getHour() == 17 && task.getDate().getMinute() <= 30);
         return task.getDate().getHour() >= 7 && end;

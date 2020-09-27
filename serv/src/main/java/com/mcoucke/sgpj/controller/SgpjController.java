@@ -22,8 +22,6 @@ public class SgpjController {
     @Autowired
     private TaskRepository taskRepository;
 
-    private final TaskService taskService = new TaskService();
-
     @GetMapping(value="/day/{date}")
     public ResponseEntity<List<Task>> getDaySchedule(@PathVariable String date) {
         try {
@@ -42,11 +40,11 @@ public class SgpjController {
         } else {
             // Check maximum task limit
             List<Task> tasks = taskRepository.findTasksByDate(LocalDateTime.of(taskDTO.getDate().toLocalDate(), LocalTime.MIDNIGHT));
-            if (taskService.getMaxNeighboursCount(tasks, taskDTO.getDate(), taskDTO.getDuration()) > 2) {
+            if (TaskService.getMaxNeighboursCount(tasks, taskDTO.getDate(), taskDTO.getDuration()) > 2) {
                 return ResponseEntity.badRequest().build();
             }
             Task task = new Task(taskDTO, LocalDateTime.now());
-            if (!(taskService.isDurationCorrect(task) && taskService.isDurationCorrect(task))) {
+            if (!(TaskService.isDurationCorrect(task) && TaskService.isDurationCorrect(task))) {
                 return ResponseEntity.badRequest().build();
             }
             taskRepository.save(task);

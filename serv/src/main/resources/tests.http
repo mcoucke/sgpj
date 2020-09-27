@@ -4,7 +4,7 @@ GET http://localhost:8080/day/2020-07-18
 POST http://localhost:8080/day
 Content-Type: application/json
 
-{"description":  "testing task service", "duration":  129, "date": "2020-07-18T14:22:24"}
+{"description":  "testing task service", "duration":  50, "date": "2020-07-18T09:22:24"}
 
 ###
 GET http://localhost:8080/week/2020-07-14
