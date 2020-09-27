@@ -1,16 +1,16 @@
-GET http://localhost:8080/day/2020-07-14
+GET http://localhost:8080/day/2020-07-18
 
 ###
 POST http://localhost:8080/day
 Content-Type: application/json
 
-{"description":  "a new task is added", "duration":  60, "date": "2020-07-14T07:12:24"}
+{"description":  "testing task service", "duration":  129, "date": "2020-07-18T14:22:24"}
 
 ###
 GET http://localhost:8080/week/2020-07-14
 
 ###
-DELETE http://localhost:8080/day/11
+DELETE http://localhost:8080/task/20
 
 ###
 PUT http://localhost:8080/task/1

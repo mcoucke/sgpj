@@ -21,21 +21,21 @@ public class Task {
 
     public Task(String description, int duration, LocalDateTime date, LocalDateTime creationDate) {
         this.description = description;
-        this.duration = duration;
+        this.duration = this.roundDuration(duration);
         this.date = this.roundDateTime(date);
         this.creationDate = creationDate;
     }
 
     public Task(TaskDTO dto, LocalDateTime creationDate) {
         this.description = dto.getDescription();
-        this.duration = dto.getDuration();
+        this.duration = this.roundDuration(dto.getDuration());
         this.date = this.roundDateTime(dto.getDate());
         this.creationDate = creationDate;
     }
 
     public void updateTask(TaskDTO dto) {
         this.description = dto.getDescription();
-        this.duration = dto.getDuration();
+        this.duration = this.roundDuration(dto.getDuration());
         this.date = this.roundDateTime(dto.getDate());
     }
 
@@ -50,6 +50,17 @@ public class Task {
         date = date.plusMinutes(min).withSecond(0).withNano(0);
         return date;
 
+    }
+
+    private int roundDuration(int duration) {
+        int min = duration;
+        int mode = duration % 30;
+        if (mode > 15) {
+            min = 30 - mode;
+        } else {
+            min = -mode;
+        }
+        return duration + min;
     }
 
     public Long getId() {

@@ -46,6 +46,9 @@ public class SgpjController {
                 return ResponseEntity.badRequest().build();
             }
             Task task = new Task(taskDTO, LocalDateTime.now());
+            if (!(taskService.isDurationCorrect(task) && taskService.isDurationCorrect(task))) {
+                return ResponseEntity.badRequest().build();
+            }
             taskRepository.save(task);
             return ResponseEntity.ok().body(task);
         }
