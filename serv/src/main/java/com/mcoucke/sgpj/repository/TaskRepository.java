@@ -19,4 +19,5 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     List<Task> findTasksByWeek(@Param("date") LocalDateTime date);
 
 
+
 }

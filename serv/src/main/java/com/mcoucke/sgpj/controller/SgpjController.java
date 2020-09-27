@@ -24,7 +24,7 @@ public class SgpjController {
 
     private final TaskService taskService = new TaskService();
 
-    @GetMapping("/day/{date}")
+    @GetMapping(value="/day/{date}")
     public ResponseEntity<List<Task>> getDaySchedule(@PathVariable String date) {
         try {
             LocalDate localDate = LocalDate.parse(date);
@@ -35,7 +35,7 @@ public class SgpjController {
         }
     }
 
-    @PostMapping("/day")
+    @PostMapping(value="/day")
     public ResponseEntity<Task> addTask(@RequestBody TaskDTO taskDTO) {
         if (taskDTO.getDescription() == null || taskDTO.getDescription().isBlank()) {
             return ResponseEntity.badRequest().build();
@@ -45,13 +45,28 @@ public class SgpjController {
             if (taskService.getMaxNeighboursCount(tasks, taskDTO.getDate(), taskDTO.getDuration()) > 2) {
                 return ResponseEntity.badRequest().build();
             }
-            Task task = new Task(taskDTO.getDescription(), taskDTO.getDuration(), taskDTO.getDate(), LocalDateTime.now());
+            Task task = new Task(taskDTO, LocalDateTime.now());
             taskRepository.save(task);
             return ResponseEntity.ok().body(task);
         }
     }
 
-    @DeleteMapping("/day/{id}")
+    @PutMapping(value="/task/{taskId}")
+    public ResponseEntity<Task> editTask(@PathVariable String taskId, @RequestBody TaskDTO taskDTO) {
+        try {
+            Task t = taskRepository.findById(Long.parseLong(taskId)).orElse(null);
+            if (t == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            t.updateTask(taskDTO);
+            Task saved = taskRepository.save(t);
+            return ResponseEntity.ok().body(saved);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @DeleteMapping(value="/task/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable String id) {
         try {
             Task t = taskRepository.findById(Long.parseLong(id)).orElse(null);
@@ -65,7 +80,7 @@ public class SgpjController {
         }
     }
 
-    @GetMapping("/week/{date}")
+    @GetMapping(value="/week/{date}")
     public ResponseEntity<List<Task>> getWeekSchedule(@PathVariable String date) {
         try {
             LocalDate localDate = LocalDate.parse(date);

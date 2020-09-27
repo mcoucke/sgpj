@@ -1,5 +1,7 @@
 package com.mcoucke.sgpj.model;
 
+import com.mcoucke.sgpj.DTO.TaskDTO;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -22,6 +24,19 @@ public class Task {
         this.duration = duration;
         this.date = this.roundDateTime(date);
         this.creationDate = creationDate;
+    }
+
+    public Task(TaskDTO dto, LocalDateTime creationDate) {
+        this.description = dto.getDescription();
+        this.duration = dto.getDuration();
+        this.date = this.roundDateTime(dto.getDate());
+        this.creationDate = creationDate;
+    }
+
+    public void updateTask(TaskDTO dto) {
+        this.description = dto.getDescription();
+        this.duration = dto.getDuration();
+        this.date = this.roundDateTime(dto.getDate());
     }
 
     private LocalDateTime roundDateTime(LocalDateTime date) {
