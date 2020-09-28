@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
-import java.util.List;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -87,6 +87,24 @@ public class SgpjController {
             LocalDate localDate = LocalDate.parse(date);
             List<Task> tasks = taskRepository.findTasksByWeek(LocalDateTime.of(localDate, LocalTime.MIDNIGHT));
             return ResponseEntity.ok().body(tasks);
+        } catch (DateTimeParseException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping(value="/month/{date}")
+    public ResponseEntity<Map<LocalDate, Integer>> getMonthSchedule(@PathVariable String date) {
+        try {
+            Map<LocalDate, Integer> schedule = new TreeMap<>();
+            LocalDate lastDate = LocalDate.parse(date).plusMonths(1).withDayOfMonth(1).minusDays(1);
+            LocalDate localDate = LocalDate.parse(date).withDayOfMonth(1);
+            while (localDate.isBefore(lastDate) || localDate.isEqual(lastDate)) {
+                List<Task> taskList = taskRepository.findTasksByDate(LocalDateTime.of(localDate, LocalTime.MIDNIGHT));
+                schedule.put(localDate, taskList.size());
+                localDate = localDate.plusDays(1);
+            }
+            return ResponseEntity.ok().body(schedule);
+
         } catch (DateTimeParseException e) {
             return ResponseEntity.badRequest().build();
         }
