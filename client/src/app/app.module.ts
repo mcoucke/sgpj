@@ -20,6 +20,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { WeekComponent } from './components/week/week.component';
+import { MonthComponent } from './components/month/month.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AppComponent,
     DayComponent,
     AddDayDialog,
-    EditDayDialog
+    EditDayDialog,
+    WeekComponent,
+    MonthComponent
   ],
   imports: [
     BrowserModule,
