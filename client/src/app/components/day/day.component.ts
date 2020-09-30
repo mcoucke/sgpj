@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task/task.service';
 
 import { Task } from 'src/app/models/task.model';
-import { AddDayDialog } from 'src/app/dialogs/day/add/add.day.dialog';
+import { AddDayDialog } from 'src/app/components/dialogs/day/add/add.day.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params } from '@angular/router';
 import { formatDate } from '@angular/common';
+
+import { TaskConstants } from 'src/app/constants/task.constant';
 
 @Component({
   selector: 'app-day',
@@ -15,17 +17,8 @@ import { formatDate } from '@angular/common';
 })
 export class DayComponent implements OnInit {
 
-  slots : string[] = [
-    '07:00', '08:00', '09:00', '10:00',
-    '11:00', '12:00', '13:00', '14:00',
-    '15:00', '16:00', '17:00', '18:00' ];
-
-  css_tasks_classes : string[][] = [
-    ['complete-col'],
-    ['left-half-col', 'right-half-col'],
-    ['left-third-col', 'mid-third-col', 'right-third-col']
-  ];
-
+  slots : string[] = TaskConstants.SLOTS;
+  css_tasks_classes : string[][] = TaskConstants.CSS_TASKS_CLASSES;
   tasks : Task[];
 
   currentDay : string;

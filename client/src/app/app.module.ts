@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DayComponent } from './components/day/day.component';
 
-import { AddDayDialog } from './dialogs/day/add/add.day.dialog';
-import { EditDayDialog } from './dialogs/day/edit/edit.day.dialog';
+import { AddDayDialog } from './components/dialogs/day/add/add.day.dialog';
+import { EditDayDialog } from './components/dialogs/day/edit/edit.day.dialog';
 
 import { TaskService } from './services/task/task.service';
 

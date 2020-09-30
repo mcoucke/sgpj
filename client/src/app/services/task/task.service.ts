@@ -43,6 +43,14 @@ export class TaskService {
       );
   }
 
+  getWeek(date : string) {
+    return this.http.get<Object[]>("http://localhost:8080/week/" + date)
+      .pipe(
+        // retry(3),
+        catchError(this.handleError)
+      );
+  }
+
   addTask(description : string, duration : number, date : Date): Observable<Task> {
     return this.http.post<Task>("http://localhost:8080/day/", {description, duration, date}, httpOptions)
       .pipe(

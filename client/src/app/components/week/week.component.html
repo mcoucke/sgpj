@@ -1,1 +1,19 @@
-<p>week works!</p>
+<div class="title-container">
+    <span [routerLink]="['/schedule/week', previousDay]" class="material-icons arrows">navigate_before</span>
+    <div class="week-title">{{getCurrentWeekTitle()}}</div>
+    <span [routerLink]="['/schedule/week', nextDay]" class="material-icons arrows">navigate_next</span>
+</div>
+<div class="wrapper">
+    <ng-container *ngFor="let date of weekDates; let index = index">
+        <div [ngClass]="'complete-col-' + index" class="week-day-title">{{date}}</div>
+    </ng-container>
+    <div class="week-day-row"></div>
+    <div class="time-col" *ngFor="let s of slots">{{s}}</div>
+    <ng-container *ngFor="let taskList of tasks; let index = index">
+        <ng-container *ngFor="let t of taskList">
+            <div (click)="openEditTaskDialog(t)" [ngClass]="t.colCssClass + '-' + index" class="task" [ngStyle]="{'grid-row': t.gridRowValue }">
+                {{t.description}}
+            </div>
+        </ng-container>
+    </ng-container>
+</div>
