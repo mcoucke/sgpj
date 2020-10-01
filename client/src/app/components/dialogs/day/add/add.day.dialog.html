@@ -23,7 +23,7 @@
     <div>
       <mat-form-field appearance="fill" class="full-form-item">
         <mat-label>Description</mat-label>
-        <textarea matInput [(ngModel)]="data.description" required></textarea>
+        <textarea matInput [(ngModel)]="data.description" maxlength="255" required></textarea>
       </mat-form-field>
     </div>
   </div>
