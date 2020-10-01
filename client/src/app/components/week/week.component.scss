@@ -10,13 +10,11 @@
     --cc:linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5));
     --cl:repeating-linear-gradient(to right,black 2px 6px,transparent 6px 10px);
     --clh:repeating-linear-gradient(to right,grey 1px 2px,transparent 3px 4px);
-    // gap
-    --p:0px;
     --w:calc(100%);
     // width of one column without gap
-    --wc:calc((var(--w) - 43 * var(--p)) / 44);
+    --wc:calc(var(--w) / 44);
     // width of one line without gap
-    --wl:calc((var(--w) - 24 * var(--p)) / 25);
+    --wl:calc(var(--w) / 25);
     background:
     // vertical lines
     var(--cc) calc(2*var(--wc)) / 1px var(--w),

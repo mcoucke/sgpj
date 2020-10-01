@@ -1,0 +1,138 @@
+.wrapper {
+    width: 60%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(24, 3.5vh);
+    grid-auto-flow: column;
+    margin: auto;
+    border: thin solid;
+    
+    --cc:linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5));
+    --cl:repeating-linear-gradient(to right,black 2px 6px,transparent 6px 10px);
+    --clh:repeating-linear-gradient(to right,grey 1px 2px,transparent 3px 4px);
+    --w:calc(100%);
+    // width of one column without gap
+    --wc:calc(var(--w) / 7);
+    // width of one line without gap
+    --wl:calc(var(--w) / 24);
+    background:
+    // vertical lines
+    var(--cc) calc(1*var(--wc)) / 1px var(--w),
+    // horizontal lines
+    // hour lines
+    var(--cl) 0 calc(2*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(4*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(6*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(8*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(10*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(12*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(14*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(16*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(18*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(20*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(22*var(--wl)) / var(--w) 0.5px,
+    var(--cl) 0 calc(24*var(--wl)) / var(--w) 0.5px,
+    // half hour lines
+    var(--clh) 0 calc(1*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(3*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(5*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(7*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(9*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(11*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(13*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(15*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(17*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(19*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(21*var(--wl)) / var(--w) 1px,
+    var(--clh) 0 calc(23*var(--wl)) / var(--w) 1px;
+
+    background-repeat:no-repeat; 
+}
+
+.title-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    user-select: none;
+}
+
+.task {
+    color: white;
+    background-color: steelblue;
+    transition: 0.3s;
+}
+
+.task:hover {
+    cursor: pointer;
+    background-color: teal;
+    transition: 0.3s;
+}
+
+.day-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25em;
+    padding: 1em;
+}
+
+.time-col {
+    grid-row: span 2;
+    align-self: center;
+    text-align: center;
+    background-color: white;
+}
+
+.complete-col {
+    grid-column: 2 / 8;
+}
+
+.left-half-col {
+    grid-column: 2 / 5;
+}
+
+.right-half-col {
+    grid-column: 5 / 8;
+}
+
+.left-third-col {
+    grid-column: 2 / 4;
+}
+
+.mid-third-col {
+    grid-column: 4 / 6;
+}
+
+.right-third-col {
+    grid-column: 6 / 8;
+}
+
+.add_icon {
+    position: absolute;
+    bottom: 3%;
+    right: 3%;
+    cursor: pointer;
+    font-size: 4em;
+    color: orangered;
+    transition: 0.3s;
+}
+
+.add_icon:hover {
+    color: orange;
+    transition: 0.3s;
+}
+
+.arrows {
+    font-size: 2em;
+    cursor: pointer;
+    color: black;
+    transition: 0.3s;
+}
+
+.arrows:hover {
+    color: dimgray;
+    transition: 0.3s;
+}
+
+.arrows:focus {
+    outline: none;
+}
