@@ -65,6 +65,9 @@
 .task {
     color: white;
     background-color: steelblue;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     transition: 0.3s;
 }
 
