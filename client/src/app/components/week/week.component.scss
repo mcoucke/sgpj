@@ -1,12 +1,60 @@
 .wrapper {
     width: 80%;
     display: grid;
-    grid-template-columns: 1fr repeat(42, 0.5fr);
-    grid-template-rows: 3vh repeat(24, 3vh);
-    grid-auto-flow: column;
+    grid-template-columns: repeat(44, 1fr);
+    grid-template-rows: repeat(25, 3vh);
+    grid-auto-flow: row;
     margin: auto;
     border: thin solid;
-    gap: 0.4em;
+
+    --cc:linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5));
+    --cl:repeating-linear-gradient(to right,black 2px 6px,transparent 6px 10px);
+    --clh:repeating-linear-gradient(to right,grey 1px 2px,transparent 3px 4px);
+    // gap
+    --p:0px;
+    --w:calc(100%);
+    // width of one column without gap
+    --wc:calc((var(--w) - 43 * var(--p)) / 44);
+    // width of one line without gap
+    --wl:calc((var(--w) - 24 * var(--p)) / 25);
+    background:
+    // vertical lines
+    var(--cc) calc(2*var(--wc)) / 1px var(--w),
+    var(--cc) calc(8*var(--wc)) / 1px var(--w),
+    var(--cc) calc(14*var(--wc)) / 1px var(--w),
+    var(--cc) calc(20*var(--wc)) / 1px var(--w),
+    var(--cc) calc(26*var(--wc)) / 1px var(--w),
+    var(--cc) calc(32*var(--wc)) / 1px var(--w),
+    var(--cc) calc(38*var(--wc)) / 1px var(--w),
+    // horizontal lines
+    // hour lines
+    var(--cl) 0 calc(1*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(3*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(5*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(7*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(9*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(11*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(13*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(15*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(17*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(19*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(21*var(--wl)) / var(--w) 1px,
+    var(--cl) 0 calc(23*var(--wl)) / var(--w) 1px,
+    // half-hour lines
+    var(--clh) 0 calc(2*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(4*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(6*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(8*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(10*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(12*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(14*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(16*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(18*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(20*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(22*var(--wl)) / var(--w) 0.5px,
+    var(--clh) 0 calc(24*var(--wl)) / var(--w) 0.5px;
+
+    background-repeat:no-repeat; 
 }
 
 .title-container {
@@ -38,6 +86,7 @@
 .week-day-title {
     grid-row: 1;
     text-align: center;
+    align-self: center;
     font-weight: bold;
 }
 
@@ -47,41 +96,43 @@
 
 .time-col {
     grid-row: span 2;
+    grid-column: 1 / 3;
     align-self: center;
     text-align: center;
+    background-color: white;
 }
 
 @for $i from 0 through 6 {
     $size: 6;
     $gap: $i * $size;
     .complete-col-#{$i} {
-        $col: #{2 + $gap} / #{8 + $gap};
+        $col: #{3 + $gap} / #{9 + $gap};
         grid-column: $col;
     }
 
     .left-half-col-#{$i} {
-        $col : #{2 + $gap} / #{5 + $gap};
+        $col : #{3 + $gap} / #{6 + $gap};
         grid-column: $col;
     }
 
     .right-half-col-#{$i} {
-        $col : #{5 + $gap} / #{8 + $gap};
+        $col : #{6 + $gap} / #{9 + $gap};
         grid-column: $col;
     }
 
     .left-third-col-#{$i} {
-        $col : #{2 + $gap} / #{4 + $gap};
+        $col : #{3 + $gap} / #{5 + $gap};
         grid-column: $col;
     }
 
     .mid-third-col-#{$i} {
-        $col : #{4 + $gap} / #{6 + $gap};
+        $col : #{5 + $gap} / #{7 + $gap};
         grid-column: $col;
 
     }
 
     .right-third-col-#{$i} {
-        $col : #{6 + $gap} / #{8 + $gap};
+        $col : #{7 + $gap} / #{9 + $gap};
         grid-column: $col;
     }
 }
