@@ -11,7 +11,7 @@
     <div class="time-col" *ngFor="let s of slots">{{s}}</div>
     <ng-container *ngFor="let taskList of tasks; let index = index">
         <ng-container *ngFor="let t of taskList">
-            <div (click)="openEditTaskDialog(t)" [ngClass]="t.colCssClass + '-' + index" class="task" [ngStyle]="{'grid-row': t.gridRowValue }">
+            <div (click)="openEditTaskDialog(t)" [ngClass]="t.colCssClass + '-' + index" class="task" title="{{t.description}}" [ngStyle]="{'grid-row': t.gridRowValue }">
                 {{t.description}}
             </div>
         </ng-container>
