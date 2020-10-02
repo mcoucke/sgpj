@@ -98,6 +98,24 @@ export class DayComponent implements OnInit {
       let nb = listTasks.length;
       // index of task in list
       let pos = listTasks.map(function(e) { return e.id; }).indexOf(task.id);
+
+      // if there is a task above on the right side, put the current task on the left
+      // case for 2 tasks
+      if (pos > 0 && nb == 2) {
+        console.log(listTasks);
+        if (listTasks[0].colCssClass === this.css_tasks_classes[2][2]) {
+          pos = 0;
+        }
+      }
+      //case for 3 tasks
+      if (pos > 0 && nb == 3) {
+        console.log(listTasks);
+        if (listTasks[0].colCssClass === this.css_tasks_classes[2][2]
+          || listTasks[1].colCssClass === this.css_tasks_classes[2][2]) {
+          pos = 0;
+        }
+      }
+
       task.colCssClass = this.css_tasks_classes[nb-1][pos];
       // Row css position
       let startPos = this.getGridRowPosFromDate(task) + 1;
