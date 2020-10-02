@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Ajouter une tâche</h1>
+<div mat-dialog-content>
+  <div class="form-container">
+    <div>
+      <mat-form-field appearance="fill" class="full-form-item">
+        <mat-label>Date assignée</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="data.date" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="half-form-div">
+      <mat-form-field appearance="fill" class="half-form-item">
+        <mat-label>Horaire</mat-label>
+        <mat-select [(ngModel)]="data.time" required>
+          <mat-option *ngFor="let t of times" value="{{ t[1] }}">{{ t[0] }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="half-form-item right-aligned">
+        <mat-label>Durée</mat-label>
+        <input type="number" min="30" max="660" step="30" matInput [(ngModel)]="data.duration" required>
+        <span matSuffix>minutes</span>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="full-form-item">
+        <mat-label>Description</mat-label>
+        <textarea matInput [(ngModel)]="data.description" maxlength="255" required></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onNoClick()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="onValidateClick()" cdkFocusInitial>Valider</button>
+</div>

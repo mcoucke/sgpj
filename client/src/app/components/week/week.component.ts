@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task/task.service';
 
 import { Task } from 'src/app/models/task.model';
-import { AddDayDialog } from 'src/app/components/dialogs/day/add/add.day.dialog';
+import { AddDialog } from 'src/app/components/dialogs/add/add.dialog.component';
+import { EditDialog } from 'src/app/components/dialogs/edit/edit.dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -31,10 +32,11 @@ export class WeekComponent implements OnInit {
   weekDates : string[];
 
   constructor(
-    private _taskService : TaskService,
+    private _taskService: TaskService,
     private _route: ActivatedRoute,
-    private _snackBar : MatSnackBar,
-    private addDialog : MatDialog
+    private _snackBar: MatSnackBar,
+    private addDialog: MatDialog,
+    private editDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -153,37 +155,84 @@ export class WeekComponent implements OnInit {
   }
 
   openAddTaskDialog(): void {
-    const addDialogRef = this.addDialog.open(AddDayDialog, {
+    const addDialogRef = this.addDialog.open(AddDialog, {
       width: '25%',
       data: {
         date: new Date(this.currentDay),
         time: "07:00",
         duration: 30,
-      }
+      },
+      disableClose: true
     });
 
     addDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        let timeTokens = result.time.split(':');
-        let taskDate = new Date(Date.UTC(result.date.getFullYear(), result.date.getMonth(), 
-                        result.date.getDate(), Number(timeTokens[0]), Number(timeTokens[1]), 0));
-        this._taskService.addTask(result.description, result.duration, taskDate)
-          .subscribe((data : any) => {
-            let dateObj = new Date(data.date);
-            this.openSnackBar('Task added to ' + dateObj.toLocaleDateString(), 'OK', 3000);
-            this.update();
-          }, (error) => {
-            console.log(error);
-            this.openSnackBar(error, null, 3000);
-          })
+        if (result.event === 'validate') {
+          let timeTokens = result.data.time.split(':');
+          let taskDate = new Date(Date.UTC(result.data.date.getFullYear(), result.data.date.getMonth(), 
+                          result.data.date.getDate(), Number(timeTokens[0]), Number(timeTokens[1]), 0));
+          this._taskService.addTask(result.data.description, result.data.duration, taskDate)
+            .subscribe((data : any) => {
+              let dateObj = new Date(data.date);
+              this.openSnackBar('Task added to ' + dateObj.toLocaleDateString(), 'OK', 3000);
+              this.update();
+            }, (error) => {
+              console.log(error);
+              this.openSnackBar(error, null, 3000);
+            })
+        }
       }
     })
   }
 
   openEditTaskDialog(task : Task): void {
-    console.log(task);
-  }
+    const editDialogRef = this.editDialog.open(EditDialog, {
+      width: '25%',
+      data: {
+        id: task.id,
+        date: task.date,
+        time: formatDate(task.date, 'HH:mm', 'en-US'),
+        duration: task.duration,
+        description: task.description
+      },
+      disableClose: true
+    });
 
+    editDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        switch (result.event) {
+          case 'delete': {
+            this._taskService.deleteTask(result.id)
+              .subscribe((data : any) => {
+                this.openSnackBar('Task deleted', 'OK', 3000);
+                this.update();
+              }, (error) => {
+                console.log(error);
+                this.openSnackBar(error, null, 3000);
+              })
+            break;
+          }
+          case 'validate': {
+            let timeTokens = result.data.time.split(':');
+            let taskDate = new Date(Date.UTC(result.data.date.getFullYear(), result.data.date.getMonth(), 
+                            result.data.date.getDate(), Number(timeTokens[0]), Number(timeTokens[1]), 0));
+            this._taskService.editTask(result.data.id, result.data.description, result.data.duration, taskDate)
+              .subscribe((data : any) => {
+                this.openSnackBar('Task edited', 'OK', 3000);
+                this.update();
+              }, (error) => {
+                console.log(error);
+                this.openSnackBar(error, null, 3000);
+              })
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    });
+  }
 
   openSnackBar(message: string, action: string, duration: number) {
     this._snackBar.open(message, action, {

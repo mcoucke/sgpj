@@ -3,12 +3,10 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Task } from 'src/app/models/task.model';
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { NumberValueAccessor } from '@angular/forms';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    Authorization: 'my-auth-token'
+    'Content-Type':  'application/json'
   })
 };
 
@@ -16,6 +14,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TaskService {
+
+  private _uri : string = "http://localhost:8080";
 
   constructor(private http : HttpClient) { }
 
@@ -36,7 +36,8 @@ export class TaskService {
   }
 
   getDay(date : string) {
-    return this.http.get<Object[]>("http://localhost:8080/day/" + date)
+    let fulluri = this._uri + "/day/" + date;
+    return this.http.get<Object[]>(fulluri)
       .pipe(
         // retry(3),
         catchError(this.handleError)
@@ -44,7 +45,8 @@ export class TaskService {
   }
 
   getWeek(date : string) {
-    return this.http.get<Object[]>("http://localhost:8080/week/" + date)
+    let fulluri = this._uri + "/week/" + date;
+    return this.http.get<Object[]>(fulluri)
       .pipe(
         // retry(3),
         catchError(this.handleError)
@@ -52,7 +54,26 @@ export class TaskService {
   }
 
   addTask(description : string, duration : number, date : Date): Observable<Task> {
-    return this.http.post<Task>("http://localhost:8080/day/", {description, duration, date}, httpOptions)
+    let fulluri = this._uri + "/day/";
+    return this.http.post<Task>(fulluri, {description, duration, date}, httpOptions)
+      .pipe(
+        // retry(3),
+        catchError(this.handleError)
+      );
+  }
+
+  editTask(id : number, description : string, duration : number, date : Date): Observable<Task> {
+    let fulluri = this._uri + "/task/" + id;
+    return this.http.put<any>(fulluri, {description, duration, date}, httpOptions)
+      .pipe(
+        // retry(3),
+        catchError(this.handleError)
+      );
+  }
+
+  deleteTask(id : number) {
+    let fulluri = this._uri + "/task/" + id;
+    return this.http.delete<any>(fulluri, httpOptions)
       .pipe(
         // retry(3),
         catchError(this.handleError)
