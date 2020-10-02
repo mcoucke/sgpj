@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/services/task/task.service';
 
 import { Task } from 'src/app/models/task.model';
+import { AddDayDialog } from 'src/app/components/dialogs/day/add/add.day.dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params } from '@angular/router';
 import { formatDate } from '@angular/common';
 
@@ -29,7 +32,9 @@ export class WeekComponent implements OnInit {
 
   constructor(
     private _taskService : TaskService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _snackBar : MatSnackBar,
+    private addDialog : MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -55,6 +60,10 @@ export class WeekComponent implements OnInit {
         }
       );
     })
+  }
+
+  update() : void {
+    this.ngOnInit();
   }
 
   getCurrentWeekTitle() {
@@ -105,16 +114,17 @@ export class WeekComponent implements OnInit {
         // if there is a task above on the right side, put the current task on the left
         // case for 2 tasks
         if (pos > 0 && nb == 2) {
-          console.log(listTasks);
-          if (listTasks[0].colCssClass === this.css_tasks_classes[2][2]) {
+          if (listTasks[0].colCssClass === this.css_tasks_classes[2][2]
+            || listTasks[0].colCssClass === this.css_tasks_classes[1][1]) {
             pos = 0;
           }
         }
         //case for 3 tasks
         if (pos > 0 && nb == 3) {
-          console.log(listTasks);
           if (listTasks[0].colCssClass === this.css_tasks_classes[2][2]
-            || listTasks[1].colCssClass === this.css_tasks_classes[2][2]) {
+            || listTasks[1].colCssClass === this.css_tasks_classes[2][2]
+            || listTasks[0].colCssClass === this.css_tasks_classes[1][1]
+            || listTasks[1].colCssClass === this.css_tasks_classes[1][1]) {
             pos = 0;
           }
         }
@@ -140,6 +150,45 @@ export class WeekComponent implements OnInit {
       startDate.setMinutes(startDate.getMinutes() + 30);
     }
     return maxNeighs;
+  }
+
+  openAddTaskDialog(): void {
+    const addDialogRef = this.addDialog.open(AddDayDialog, {
+      width: '25%',
+      data: {
+        date: new Date(this.currentDay),
+        time: "07:00",
+        duration: 30,
+      }
+    });
+
+    addDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let timeTokens = result.time.split(':');
+        let taskDate = new Date(Date.UTC(result.date.getFullYear(), result.date.getMonth(), 
+                        result.date.getDate(), Number(timeTokens[0]), Number(timeTokens[1]), 0));
+        this._taskService.addTask(result.description, result.duration, taskDate)
+          .subscribe((data : any) => {
+            let dateObj = new Date(data.date);
+            this.openSnackBar('Task added to ' + dateObj.toLocaleDateString(), 'OK', 3000);
+            this.update();
+          }, (error) => {
+            console.log(error);
+            this.openSnackBar(error, null, 3000);
+          })
+      }
+    })
+  }
+
+  openEditTaskDialog(task : Task): void {
+    console.log(task);
+  }
+
+
+  openSnackBar(message: string, action: string, duration: number) {
+    this._snackBar.open(message, action, {
+      duration: duration,
+    });
   }
 
   initNavigation() {

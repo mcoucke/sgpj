@@ -32,7 +32,7 @@ export class DayComponent implements OnInit {
     private _taskService : TaskService,
     private _route: ActivatedRoute,
     private _snackBar : MatSnackBar,
-    public addDialog : MatDialog
+    private addDialog : MatDialog
     ) { }
 
   ngOnInit(): void {
@@ -55,6 +55,10 @@ export class DayComponent implements OnInit {
       );
     })
     
+  }
+
+  update() : void {
+    this.ngOnInit();
   }
 
   getCurrentDateTitle() {
@@ -102,16 +106,17 @@ export class DayComponent implements OnInit {
       // if there is a task above on the right side, put the current task on the left
       // case for 2 tasks
       if (pos > 0 && nb == 2) {
-        console.log(listTasks);
-        if (listTasks[0].colCssClass === this.css_tasks_classes[2][2]) {
+        if (listTasks[0].colCssClass === this.css_tasks_classes[2][2]
+          || listTasks[0].colCssClass === this.css_tasks_classes[1][1]) {
           pos = 0;
         }
       }
       //case for 3 tasks
       if (pos > 0 && nb == 3) {
-        console.log(listTasks);
         if (listTasks[0].colCssClass === this.css_tasks_classes[2][2]
-          || listTasks[1].colCssClass === this.css_tasks_classes[2][2]) {
+          || listTasks[1].colCssClass === this.css_tasks_classes[2][2]
+          || listTasks[0].colCssClass === this.css_tasks_classes[1][1]
+          || listTasks[1].colCssClass === this.css_tasks_classes[1][1]) {
           pos = 0;
         }
       }
@@ -156,6 +161,7 @@ export class DayComponent implements OnInit {
           .subscribe((data : any) => {
             let dateObj = new Date(data.date);
             this.openSnackBar('Task added to ' + dateObj.toLocaleDateString(), 'OK', 3000);
+            this.update();
           }, (error) => {
             console.log(error);
             this.openSnackBar(error, null, 3000);
