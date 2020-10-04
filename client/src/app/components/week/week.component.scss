@@ -89,6 +89,13 @@
     text-align: center;
     align-self: center;
     font-weight: bold;
+    transition: 0.3s;
+}
+
+.week-day-title:hover {
+    color: dimgray;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .week-day-row {

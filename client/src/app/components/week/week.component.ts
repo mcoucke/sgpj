@@ -270,4 +270,11 @@ export class WeekComponent implements OnInit {
     return str;
   }
 
+  getDateFromWeekDay(weekday : number) {
+    let date = new Date(this.currentDay);
+    let daysFromMonday = this.week_map[date.getDay()];
+    date.setDate(date.getDate() - daysFromMonday + weekday);
+    return this.parseToRoute(date);
+  }
+
 }
