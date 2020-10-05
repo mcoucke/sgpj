@@ -10,6 +10,7 @@ import { AddDialog } from 'src/app/components/dialogs/add/add.dialog.component';
 import { EditDialog } from 'src/app/components/dialogs/edit/edit.dialog.component';
 
 import { TaskService } from './services/task/task.service';
+import { RouteGuard } from './guards/route.guard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
@@ -49,7 +50,7 @@ import { MonthComponent } from './components/month/month.component';
     MatButtonModule,
     MatSnackBarModule
   ],
-  providers: [TaskService],
+  providers: [TaskService, RouteGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
