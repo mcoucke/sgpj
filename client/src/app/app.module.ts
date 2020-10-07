@@ -10,6 +10,8 @@ import { AddDialog } from 'src/app/components/dialogs/add/add.dialog.component';
 import { EditDialog } from 'src/app/components/dialogs/edit/edit.dialog.component';
 
 import { TaskService } from './services/task/task.service';
+import { RouteService } from './services/route/route.service';
+
 import { RouteGuard } from './guards/route.guard';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,11 +21,18 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDividerModule } from '@angular/material/divider';
+
+
 import { WeekComponent } from './components/week/week.component';
 import { MonthComponent } from './components/month/month.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 
 
 @NgModule({
@@ -33,7 +42,10 @@ import { MonthComponent } from './components/month/month.component';
     AddDialog,
     EditDialog,
     WeekComponent,
-    MonthComponent
+    MonthComponent,
+    MenuComponent,
+    NotFoundComponent,
+    ScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -47,10 +59,12 @@ import { MonthComponent } from './components/month/month.component';
     MatDatepickerModule,
     MatInputModule,
     MatSelectModule,
+    MatSidenavModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule
   ],
-  providers: [TaskService, RouteGuard],
+  providers: [TaskService, RouteService, RouteGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

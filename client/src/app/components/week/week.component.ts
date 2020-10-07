@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TaskService } from 'src/app/services/task/task.service';
 
 import { Task } from 'src/app/models/task.model';
@@ -10,6 +10,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { formatDate } from '@angular/common';
 
 import { TaskConstants } from 'src/app/constants/task.constant';
+import { RouteService } from 'src/app/services/route/route.service';
 
 @Component({
   selector: 'app-week',
@@ -35,8 +36,9 @@ export class WeekComponent implements OnInit {
     private _taskService: TaskService,
     private _route: ActivatedRoute,
     private _snackBar: MatSnackBar,
-    private addDialog: MatDialog,
-    private editDialog: MatDialog
+    private _addDialog: MatDialog,
+    private _editDialog: MatDialog,
+    private _routeService: RouteService
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +48,7 @@ export class WeekComponent implements OnInit {
       this.tasks = [...Array(this.days_count)].map(e => Array(0));
 
       this.currentDay = params['date'];
+      this.sendRoute();
 
       this.initNavigation();
 
@@ -155,7 +158,7 @@ export class WeekComponent implements OnInit {
   }
 
   openAddTaskDialog(): void {
-    const addDialogRef = this.addDialog.open(AddDialog, {
+    const addDialogRef = this._addDialog.open(AddDialog, {
       width: '25%',
       data: {
         date: new Date(this.currentDay),
@@ -186,7 +189,7 @@ export class WeekComponent implements OnInit {
   }
 
   openEditTaskDialog(task : Task): void {
-    const editDialogRef = this.editDialog.open(EditDialog, {
+    const editDialogRef = this._editDialog.open(EditDialog, {
       width: '25%',
       data: {
         id: task.id,
@@ -232,6 +235,10 @@ export class WeekComponent implements OnInit {
         }
       }
     });
+  }
+
+  sendRoute(): void {
+    this._routeService.sendRoute(this.currentDay);
   }
 
   openSnackBar(message: string, action: string, duration: number) {

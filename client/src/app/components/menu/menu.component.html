@@ -1,0 +1,15 @@
+<span (click)="sidenav.toggle()" class="material-icons sidenav-button">menu</span>
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav class="sidenav" mode="over">
+        <div class="menu-item" [routerLink]="['/schedule/day', currentDayRoute]" (click)="sidenav.toggle()">Journée</div>
+        <mat-divider></mat-divider>
+        <div class="menu-item" [routerLink]="['/schedule/week', currentDayRoute]" (click)="sidenav.toggle()">Semaine</div>
+        <mat-divider></mat-divider>
+        <div class="disabled-menu-item">Mois</div>
+        <mat-divider></mat-divider>
+        <div class="menu-item" [routerLink]="['/schedule/day', todayRoute]" (click)="sidenav.toggle()">Aujourd'hui</div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>

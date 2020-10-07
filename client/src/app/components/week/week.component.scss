@@ -98,6 +98,10 @@
     transition: 0.3s;
 }
 
+.week-day-title:hover {
+    outline: none;
+}
+
 .week-day-row {
     grid-row: 1;
 }
@@ -147,7 +151,7 @@
 
 .add_icon {
     position: absolute;
-    bottom: 3%;
+    bottom: 0;
     right: 3%;
     cursor: pointer;
     font-size: 4em;
