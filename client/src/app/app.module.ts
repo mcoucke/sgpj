@@ -33,6 +33,7 @@ import { MonthComponent } from './components/month/month.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
     MonthComponent,
     MenuComponent,
     NotFoundComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

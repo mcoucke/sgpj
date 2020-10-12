@@ -1,0 +1,60 @@
+h1 {
+    font-size: 2.5em;
+    color: teal;
+    text-align: center;
+    padding: 1em;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    height: 60%;
+    margin: auto;
+}
+
+.section {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: inherit;
+    justify-content: center;
+    margin: 2em;
+    color: teal;
+    background-color: white;
+    border-radius: 1%;
+    border: 1px solid teal;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.section:hover {
+    color: white;
+    background-color: teal;
+    transition: 0.3s;
+}
+
+.disabled {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: inherit;
+    justify-content: center;
+    margin: 2em;
+    border-radius: 1%;
+    color: grey;
+    cursor: default;
+    background-color: lightgrey;
+    border-radius: 1%;
+}
+
+.section_title {
+    font-size: 2em;
+}
+
+.icons {
+    font-size: 5em;
+}

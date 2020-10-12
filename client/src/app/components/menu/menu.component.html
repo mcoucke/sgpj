@@ -8,6 +8,8 @@
         <div class="disabled-menu-item">Mois</div>
         <mat-divider></mat-divider>
         <div class="menu-item" [routerLink]="['/schedule/day', todayRoute]" (click)="sidenav.toggle()">Aujourd'hui</div>
+        <mat-divider></mat-divider>
+        <div class="menu-item" [routerLink]="['/home']" (click)="sidenav.toggle()">Accueil</div>
     </mat-sidenav>
     <mat-sidenav-content>
         <ng-content></ng-content>
