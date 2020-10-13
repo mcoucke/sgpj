@@ -37,7 +37,10 @@ public class SgpjController {
     public ResponseEntity<Task> addTask(@RequestBody TaskDTO taskDTO) {
         if (taskDTO.getDescription() == null || taskDTO.getDescription().isBlank()) {
             return ResponseEntity.badRequest().build();
-        } else {
+        } else if (taskDTO.getDescription().length() > 255) {
+            return ResponseEntity.badRequest().build();
+        }
+        else {
             // Check maximum task limit
             List<Task> tasks = taskRepository.findTasksByDate(LocalDateTime.of(taskDTO.getDate().toLocalDate(), LocalTime.MIDNIGHT));
             if (TaskService.getMaxNeighboursCount(tasks, taskDTO.getDate(), taskDTO.getDuration()) > 2) {
@@ -59,9 +62,15 @@ public class SgpjController {
             if (t == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
-            t.updateTask(taskDTO);
-            Task saved = taskRepository.save(t);
-            return ResponseEntity.ok().body(saved);
+            if (taskDTO.getDescription() == null || taskDTO.getDescription().isBlank()) {
+                return ResponseEntity.badRequest().build();
+            } else if (taskDTO.getDescription().length() > 255) {
+                return ResponseEntity.badRequest().build();
+            } else {
+                t.updateTask(taskDTO);
+                Task saved = taskRepository.save(t);
+                return ResponseEntity.ok().body(saved);
+            }
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
